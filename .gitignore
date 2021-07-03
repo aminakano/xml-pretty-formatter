@@ -4,3 +4,5 @@ metadata.xml
 temp.js
 xmltojs.json
 xmltojson.json
+*.properties
+carrierbilling-analytic.xml
