@@ -5,6 +5,7 @@ const filePath = path.join(
   "./properties/CB_Anly_TrackingNumberBreakdown.properties"
 );
 const propertiesToJSON = require("properties-to-json");
+const parser = require("properties-file");
 
 (async () => {
   const arr = await require("./xmlkey")(); // an array of parsed XML metadata
@@ -27,7 +28,9 @@ const propertiesToJSON = require("properties-to-json");
       // expected result: obj {1: "name", 2: "name2", 3: "name3", 5: "", 6: "name6", 10: "name10", 12: ""}
       // ---------------------------------------------------------
       arr.forEach((val, i) => (obj[val] = json[val] || ""));
-      console.log(JSON.stringify(obj));
+      const properties = parser.stringify(obj);
+
+      console.log(properties);
     }
   });
 })();
