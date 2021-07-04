@@ -1,7 +1,8 @@
 const fs = require("fs");
 const xml2js = require("xml2js");
+const { sortArray } = require("./utils/myUtils");
 
-const xml = fs.readFileSync("metadata.xml");
+const xml = fs.readFileSync("./xml/metadata.xml");
 (async () => {
   try {
     const result = await xml2js.parseStringPromise(xml, { mergeAttrs: true });
@@ -22,5 +23,3 @@ const xml = fs.readFileSync("metadata.xml");
     console.log(error);
   }
 })();
-
-const sortArray = (a, b) => (a > b ? 1 : -1);
