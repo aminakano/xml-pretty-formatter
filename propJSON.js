@@ -28,9 +28,15 @@ const parser = require("properties-file");
       // expected result: obj {1: "name", 2: "name2", 3: "name3", 5: "", 6: "name6", 10: "name10", 12: ""}
       // ---------------------------------------------------------
       arr.forEach((val, i) => (obj[val] = json[val] || ""));
+
+      // Parse obj to properties string
       const properties = parser.stringify(obj);
 
-      console.log(properties);
+      // Write the string to a properties file
+      fs.writeFileSync(
+        `./properties/${new Date().toISOString().split(".")[0]}.properties`,
+        properties
+      );
     }
   });
 })();
