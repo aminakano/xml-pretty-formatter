@@ -5,6 +5,7 @@ const filePath = path.join(
   "./properties/CB_Anly_TrackingNumberBreakdown.properties"
 );
 const propertiesToJSON = require("properties-to-json");
+const parser = require("properties-file");
 
 (async () => {
   const arr = await require("./xmlkey")(); // an array of parsed XML metadata
@@ -17,11 +18,25 @@ const propertiesToJSON = require("properties-to-json");
       const json = propertiesToJSON(data);
       const obj = {};
 
-      // arr[1,2,3,4,5,10,6] & obj {1: "name", 2: "name2", 3: "name3", 6: "name6", 10: "name10"}
-      // expect result: newObj {1: "name", 2: "name2", 3: "name3", 10: "name10", 6: "name6"}
+      // ---------------------------------------------------------
+      // Loop through the array of metadata's keys (const arr) and find if there are the same keys in the properties files object (const json)
+      // If there are, push the keys from the array and the values to a new object (const obj)
+      // Otherwise, the keys and empty strings
 
-      arr.forEach((val, i) => (obj[val] = json[val]));
-      console.log(JSON.stringify(obj));
+      // Example:
+      // arr [1,2,3,4,5,6,10,12] & json {1: "name", 2: "name2", 3: "name3", 6: "name6", 10: "name10"}
+      // expected result: obj {1: "name", 2: "name2", 3: "name3", 5: "", 6: "name6", 10: "name10", 12: ""}
+      // ---------------------------------------------------------
+      arr.forEach((val, i) => (obj[val] = json[val] || ""));
+
+      // Parse obj to properties string
+      const properties = parser.stringify(obj);
+
+      // Write the string to a properties file
+      fs.writeFileSync(
+        `./properties/${new Date().toISOString().split(".")[0]}.properties`,
+        properties
+      );
     }
   });
 })();

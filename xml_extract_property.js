@@ -9,10 +9,7 @@ const xml = fs.readFileSync("./xml/metadata.xml");
 
     const json = result.EntityType.Property;
     const arr = [];
-    json.forEach((val, i) => {
-      arr.push(val.Name[0]);
-    });
-
+    json.forEach((val) => arr.push(val.Name[0]));
     arr.sort(sortArray);
 
     fs.writeFileSync(
