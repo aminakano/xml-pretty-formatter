@@ -1,7 +1,7 @@
 const fs = require("fs");
 const xml2js = require("xml2js");
 
-const xml = fs.readFileSync("metadata.xml");
+const xml = fs.readFileSync("./xml/metadata.xml");
 (async () => {
   try {
     const result = await xml2js.parseStringPromise(xml, { mergeAttrs: true });
