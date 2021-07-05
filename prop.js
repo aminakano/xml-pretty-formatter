@@ -1,8 +1,8 @@
 const fs = require("fs");
 const xml2js = require("xml2js");
 const { sortArray } = require("./utils/myUtils");
-
-const xml = fs.readFileSync("./xml/metadata.xml");
+const { xmlFile } = require("./config");
+const xml = fs.readFileSync(xmlFile);
 (async () => {
   try {
     const result = await xml2js.parseStringPromise(xml, { mergeAttrs: true });
@@ -10,10 +10,7 @@ const xml = fs.readFileSync("./xml/metadata.xml");
     const name = result.EntityType.Name[0];
 
     const arr = [];
-    json.forEach((val, i) => {
-      arr.push(val.Name[0]);
-    });
-
+    json.forEach((val) => arr.push(val.Name[0]));
     arr.sort(sortArray);
 
     fs.writeFileSync(`./json/${name}.json`, JSON.stringify(arr));
