@@ -36,4 +36,4 @@ Output: `${TypeName}.js`
 
 ### 2-b. `node xml-jsArr-date`
 
-Output: `${Date}.js`
+Output: `${DateTime}.js` // e.g. 2021-07-06-07:34:44
