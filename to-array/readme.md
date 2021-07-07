@@ -4,7 +4,7 @@ Extract XML's **Names** and store then in an array.
 
 XML
 
-```
+```xml
 <EntityType Name="TypeName">
   <Key>
     <PropertyRef Name="Id"/>
@@ -20,20 +20,20 @@ XML
 
 JavaScript
 
-```
-["A","B","C","D","E","to_F"]
+```javascript
+["A", "B", "C", "D", "E", "to_F"];
 ```
 
 ## How to use
 
-### 1. In `index.js` or `xml-jsArr-date.js`
+#### 1. In `index.js` or `xml-jsArr-date.js`
 
 Specify the file path of XML and where the new file gets stored
 
-### 2-a. `node index`
+#### 2-a. `node index`
 
 Output: `${TypeName}.js`
 
-### 2-b. `node xml-jsArr-date`
+#### 2-b. `node xml-jsArr-date`
 
-Output: `${DateTime}.js` // e.g. 2021-07-06-07:34:44
+Output: `${DateTime}.js` // e.g. 2021-07-06-07:34:44.js
