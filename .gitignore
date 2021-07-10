@@ -4,6 +4,7 @@
 /json
 /properties
 /xml
+/to-json-xml/xml
 metadata.xml
 temp.js
 config.js
