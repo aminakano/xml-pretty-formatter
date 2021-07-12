@@ -1,14 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 const propertiesToJSON = require("properties-to-json");
-const { propertiesFile } = require("./config");
+const { propertiesFile, xmlFile } = require("./config");
 const filePath = path.join(__dirname, propertiesFile);
 
 const xml2js = require("xml2js");
-const { xmlFile } = require("./config");
 const xml = fs.readFileSync(xmlFile);
-
-const { dateString } = require("../utils/myUtils");
 
 (async () => {
   try {
@@ -23,6 +20,7 @@ const { dateString } = require("../utils/myUtils");
         throw new Error();
       } else {
         const prop = propertiesToJSON(data);
+        const fileName = propertiesFile.split("/").slice(-1)[0].split(".")[0];
 
         // Assign properties' values to xml's defaultDescription
         attr.forEach(
@@ -37,7 +35,7 @@ const { dateString } = require("../utils/myUtils");
         const newXml = builder.buildObject(result);
 
         // Write a new XML file
-        fs.writeFileSync(`./${dateString}.xml`, newXml);
+        fs.writeFileSync(`./xml/${fileName}.xml`, newXml);
       }
     });
   } catch (error) {

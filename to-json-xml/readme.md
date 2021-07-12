@@ -1,6 +1,6 @@
 # XML to JSON to XML
 
-Convert XML (SAP Calculation view/logicalModel) to JSON, update `defaultDescription` attribute based on properties file, convert it back to XML and write a new file
+Convert XML (SAP Calculation view/>logicalModel) to JSON, update `defaultDescription` attribute based on properties file, convert it back to XML and write a new file
 
 XML
 
@@ -21,7 +21,6 @@ XML
 		</attribute>
 	</attributes>
 	<calculatedAttributes>
-  </calculatedAttribute>
 	</calculatedAttributes>
 	<baseMeasures>
 	</baseMeasures>
@@ -58,7 +57,6 @@ Converted XML
 		</attribute>
 	</attributes>
 	<calculatedAttributes>
-  </calculatedAttribute>
 	</calculatedAttributes>
 	<baseMeasures>
 	</baseMeasures>
@@ -76,4 +74,4 @@ Specify the file path of XML & properties and where the new file gets stored
 
 #### 2. `node index`
 
-Output: `${DateTime}.xml` // e.g. 2021-07-06-07:34:44.xml
+Output: `${propertiesFileName}.xml`
