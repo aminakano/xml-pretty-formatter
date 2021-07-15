@@ -28,13 +28,15 @@ const xml = fs.readFileSync(xmlFile);
           (val) => (val.descriptions[0].$.defaultDescription = prop[val.$.id])
         );
 
-        measure.forEach(
-          (val) => (val.descriptions[0].$.defaultDescription = prop[val.$.id])
-        );
-
         // Re-assign the array to the original result object
         result.logicalModel.attributes[0].attribute = attr;
-        result.logicalModel.baseMeasures[0].measure = measure;
+
+        if (measure) {
+          measure.forEach(
+            (val) => (val.descriptions[0].$.defaultDescription = prop[val.$.id])
+          );
+          result.logicalModel.baseMeasures[0].measure = measure;
+        }
 
         // Convert JSON to XML
         const builder = new xml2js.Builder();
