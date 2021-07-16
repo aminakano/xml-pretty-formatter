@@ -25,7 +25,8 @@ const xml = fs.readFileSync(xmlFile);
 
         // Assign properties' values to xml's defaultDescription
         attr.forEach(
-          (val) => (val.descriptions[0].$.defaultDescription = prop[val.$.id])
+          (val) =>
+            (val.descriptions[0].$.defaultDescription = prop[val.$.id] || "")
         );
 
         // Re-assign the array to the original result object
@@ -33,7 +34,8 @@ const xml = fs.readFileSync(xmlFile);
 
         if (measure) {
           measure.forEach(
-            (val) => (val.descriptions[0].$.defaultDescription = prop[val.$.id])
+            (val) =>
+              (val.descriptions[0].$.defaultDescription = prop[val.$.id] || "")
           );
           result.logicalModel.baseMeasures[0].measure = measure;
         }
