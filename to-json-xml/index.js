@@ -41,11 +41,15 @@ const xml = fs.readFileSync(xmlFile);
         }
 
         // Convert JSON to XML
-        const builder = new xml2js.Builder();
+        const builder = new xml2js.Builder({
+          renderOpts: { pretty: true, indent: "    " },
+        });
         const newXml = builder.buildObject(result);
 
         // Write a new XML file
-        fs.writeFileSync(`./xml/${fileName}.xml`, newXml);
+
+        // fs.writeFileSync(`./xml/${fileName}.xml`, newXml);
+        fs.writeFileSync(`./xml/${new Date().getTime()}.xml`, newXml); // for test purposes
       }
     });
   } catch (error) {
