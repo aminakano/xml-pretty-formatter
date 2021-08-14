@@ -48,8 +48,9 @@ const xml = fs.readFileSync(xmlFile);
 
         // Write a new XML file
 
-        // fs.writeFileSync(`./xml/${fileName}.xml`, newXml);
-        fs.writeFileSync(`./xml/${new Date().getTime()}.xml`, newXml); // for test purposes
+        fs.writeFileSync(`./xml/${fileName}.xml`, newXml);
+        // Output for test purposes
+        // fs.writeFileSync(`./xml/${new Date().getTime()}.xml`, newXml);
       }
     });
   } catch (error) {
