@@ -3,9 +3,9 @@ const xml2js = require("xml2js");
 const { xmlFile } = require("../config");
 const xml = fs.readFileSync(xmlFile);
 const parser = require("properties-file");
-const util = require("util");
 
-const arr = async () => {
+
+(async () => {
   try {
     const result = await xml2js.parseStringPromise(xml, { mergeAttrs: true });
     const json = await result.EntityType.Property;
@@ -20,12 +20,16 @@ const arr = async () => {
     const sortedMap = new Map(sortedArray);
     const sortedObj = Object.fromEntries(sortedMap);
     console.log(sortedObj)
+    // Parse obj to properties string
+    const properties = parser.stringify(sortedObj);
 
-    return { arr, entityName };
+    // Write the string to a properties file
+    fs.writeFileSync(`../properties/${entityName}.properties`, properties);
+
   } catch (error) {
     console.log(error);
   }
-};
-arr();
-// module.exports = arr;
+})();
+
+// const util = require("util");
 // console.log(util.inspect(obj, {maxArrayLength: null}))
