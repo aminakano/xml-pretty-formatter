@@ -1,36 +1,35 @@
 const fs = require("fs");
-const path = require("path");
-const propertiesToJSON = require("properties-to-json");
+const xml2js = require("xml2js");
+const { xmlFile } = require("../config");
+const xml = fs.readFileSync(xmlFile);
 const parser = require("properties-file");
-const { propertiesFile } = require("../config");
-const filePath = path.join(__dirname, propertiesFile);
+
 
 (async () => {
-  const { arr, entityName } = await require("./getKeys")(); // an array of parsed XML metadata
-  // read properties file and parse to JS
-  fs.readFile(filePath, { encoding: "utf-8" }, (err, data) => {
-    if (err) {
-      throw new Error();
-    } else {
-      const json = propertiesToJSON(data);
-      const obj = {};
+  try {
+    const result = await xml2js.parseStringPromise(xml, { mergeAttrs: true });
+    const json = await result.EntityType.Property;
+    const entityName = result.EntityType.Name[0].split("Type")[0];
+    const obj = {};
 
-      // ---------------------------------------------------------
-      // Loop through the array of metadata's keys (const arr) and find if there are the same keys in the properties files object (const json)
-      // If there are, push the keys from the array and the values to a new object (const obj)
-      // Otherwise, the keys and empty strings
+    await json.forEach((val) => obj[val.Name[0]] = val["sap:label"][0]);
 
-      // Example:
-      // arr [1,2,3,4,5,6,10,12] & json {1: "name", 2: "name2", 3: "name3", 6: "name6", 10: "name10"}
-      // expected result: obj {1: "name", 2: "name2", 3: "name3", 4: "", 5: "", 6: "name6", 10: "name10", 12: ""}
-      // ---------------------------------------------------------
-      arr.forEach((val, i) => (obj[val] = json[val] || ""));
+    const unsortedMap = new Map(Object.entries(obj));
+    const unsortedArray = [...unsortedMap];
+    const sortedArray = unsortedArray.sort(([key1, val1], [key2, val2]) => key1.localeCompare(key2));
+    const sortedMap = new Map(sortedArray);
+    const sortedObj = Object.fromEntries(sortedMap);
+    
+    // Parse obj to properties string
+    const properties = parser.stringify(sortedObj);
 
-      // Parse obj to properties string
-      const properties = parser.stringify(obj);
+    // Write the string to a properties file
+    fs.writeFileSync(`../properties/${entityName}.properties`, properties);
 
-      // Write the string to a properties file
-      fs.writeFileSync(`../properties/${entityName}.properties`, properties);
-    }
-  });
+  } catch (error) {
+    console.log(error);
+  }
 })();
+
+// const util = require("util");
+// console.log(util.inspect(obj, {maxArrayLength: null}))
