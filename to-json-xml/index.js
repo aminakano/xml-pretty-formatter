@@ -24,10 +24,18 @@ const xml = fs.readFileSync(xmlFile);
         const fileName = propertiesFile.split("/").slice(-1)[0].split(".")[0];
 
         // Assign properties' values to xml's defaultDescription
+
+        // a) when the defaultDescriptions have some values but also some empty strings
         attr.forEach(
           (val) =>
-            (val.descriptions[0].$.defaultDescription = prop[val.$.id] || "")
+            ((val.descriptions[0].$.defaultDescription === "") ? val.descriptions[0].$.defaultDescription = prop[val.$.id] || "" : val.descriptions[0].$.defaultDescription)
         );
+
+        // b) when assigning defaultDescription for the first time
+        // attr.forEach(
+        //   (val) =>
+        //     (val.descriptions[0].$.defaultDescription = prop[val.$.id] || "")
+        // );
 
         // Re-assign the array to the original result object
         result.logicalModel.attributes[0].attribute = attr;
@@ -48,9 +56,9 @@ const xml = fs.readFileSync(xmlFile);
 
         // Write a new XML file
 
-        fs.writeFileSync(`./xml/${fileName}.xml`, newXml);
+        // fs.writeFileSync(`./xml/${fileName}.xml`, newXml);
         // Output for test purposes
-        // fs.writeFileSync(`./xml/${new Date().getTime()}.xml`, newXml);
+        fs.writeFileSync(`./xml/${new Date().getTime()}.xml`, newXml);
       }
     });
   } catch (error) {
