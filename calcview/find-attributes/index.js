@@ -1,9 +1,19 @@
 const fs = require("fs");
 const xml2js = require("xml2js");
-const { sortArray } = require("../utils/myUtils");
+const { sortArray } = require("../../utils/myUtils");
 const { xmlFile } = require("./config");
 const xml = fs.readFileSync(xmlFile);
-(async (prop) => {
+
+/*
+Expected calcview input example
+	<attributes>
+		<attribute id="AccessPointPickup" order="1" displayAttribute="false" attributeHierarchyActive="false">
+			<descriptions defaultDescription="Access Point Pick-Up" />
+			<keyMapping columnObjectName="TU" columnName="AccessPointPickup" />
+		</attribute>
+	</attributes>
+*/
+(async () => {
   try {
     const result = await xml2js.parseStringPromise(xml, { mergeAttrs: true });
     const attributes = result.attributes.attribute;
@@ -17,5 +27,3 @@ const xml = fs.readFileSync(xmlFile);
     console.log(error);
   }
 })();
-// const util = require("util");
-// console.log(util.inspect(obj, {maxArrayLength: null}))
