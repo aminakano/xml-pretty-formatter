@@ -1,11 +1,9 @@
 .DS_Store
 /node_modules
-/js
+**/js
 /json
-/properties
-/xml
-/to-json-xml/xml
-metadata.xml
+/**/properties
+/**/xml
 temp.js
 config.js
 fetch.js
